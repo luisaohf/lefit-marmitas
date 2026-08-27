@@ -1,0 +1,100 @@
+═══════════════════════════════════════════════════════════════
+  🥗 LEFIT MARMITAS - SETUP RÁPIDO NO WINDOWS
+═══════════════════════════════════════════════════════════════
+
+VOCÊ RECEBEU 3 ARQUIVOS:
+  1. setup-lefitmarmitas.bat
+  2. App-LefitMarmitas.jsx
+  3. README-LefitMarmitas.md
+
+═══════════════════════════════════════════════════════════════
+PASSO 1: Preparar
+═══════════════════════════════════════════════════════════════
+
+✓ Abra a pasta do projeto no Windows:
+  C:\Users\Luis\Desktop\GEOVANA\Lefitmarmitas
+
+✓ Clique direito → Abrir PowerShell aqui (ou CMD)
+
+═══════════════════════════════════════════════════════════════
+PASSO 2: Rodar Setup
+═══════════════════════════════════════════════════════════════
+
+✓ Copie o arquivo "setup-lefitmarmitas.bat" PARA DENTRO da pasta
+  Lefitmarmitas
+
+✓ No PowerShell, execute:
+  .\setup-lefitmarmitas.bat
+
+✓ Aguarde terminar (vai criar toda a estrutura)
+
+═══════════════════════════════════════════════════════════════
+PASSO 3: Copiar App.jsx
+═══════════════════════════════════════════════════════════════
+
+✓ Abra "App-LefitMarmitas.jsx" com Bloco de Notas (ou VS Code)
+
+✓ COPIE TODO o conteúdo
+
+✓ Abra a pasta: src\App.jsx
+
+✓ APAGUE tudo e COLE o novo conteúdo
+
+✓ Salve
+
+═══════════════════════════════════════════════════════════════
+PASSO 4: Instalar Dependências
+═══════════════════════════════════════════════════════════════
+
+✓ No PowerShell, execute:
+  npm install
+
+✓ Aguarde terminar (pode levar 2-3 minutos)
+
+═══════════════════════════════════════════════════════════════
+PASSO 5: Testar Localmente
+═══════════════════════════════════════════════════════════════
+
+✓ No PowerShell, execute:
+  npm run dev
+
+✓ Abre seu navegador em:
+  http://localhost:5173
+
+✓ Pronto! Você deve ver a loja funcionando!
+
+═══════════════════════════════════════════════════════════════
+PRÓXIMOS PASSOS (Opcional)
+═══════════════════════════════════════════════════════════════
+
+📝 Para EDITAR os produtos:
+   Abra: src\App.jsx
+   Procure por: const products = [
+   Modifique os produtos
+
+🎨 Para TROCAR CORES:
+   Abra: src\index.css
+   Procure por: :root {
+   Mude: --fill-accent: #22c55e; (verde agora)
+
+🌐 Para SUBIR NO GITHUB PAGES:
+   Leia: README-LefitMarmitas.md
+
+═══════════════════════════════════════════════════════════════
+PROBLEMAS?
+═══════════════════════════════════════════════════════════════
+
+❌ "npm not found"
+   → Instale Node.js: https://nodejs.org
+
+❌ "erro ao rodar .bat"
+   → Abra PowerShell como ADMINISTRADOR e tente novamente
+
+❌ Porta 5173 já em uso
+   → Execute: npm run dev -- --port 3000
+
+═══════════════════════════════════════════════════════════════
+
+PRONTO! Você tem uma loja online FUNCIONANDO! 🚀
+
+Para mais detalhes, leia: README-LefitMarmitas.md
