@@ -28,4 +28,8 @@ jobs:
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+<<<<<<< HEAD
           cname:
+=======
+          cname:
+>>>>>>> 6f4db3716f424a3e97d0a03c8b09d567dea11491
