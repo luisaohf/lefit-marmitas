@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { createClient } from '@supabase/supabase-js';
-import { sendOrderNotification } from './sendOrderEmail';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
 const supabaseKey = import.meta.env.VITE_SUPABASE_KEY || '';
@@ -26,12 +25,12 @@ export default function Store() {
   const [orderConfirmed, setOrderConfirmed] = useState(null);
 
   const products = [
-    { id: 1, name: 'Frango com Br®Æcolis', price: 18.90, emoji: '??', desc: 'Peito de frango + br®Æcolis + arroz' },
-    { id: 2, name: 'Salmon Grelhado', price: 28.90, emoji: '??', desc: 'Salmon + batata doce + legumes' },
-    { id: 3, name: 'Carne Vermelha Premium', price: 24.90, emoji: '??', desc: 'Alcatra + batata inglesa + salada' },
-    { id: 4, name: 'Frango com Ab®Æbora', price: 16.90, emoji: '??', desc: 'Frango desfiado + ab®Æbora + feij?o' },
-    { id: 5, name: 'Mix Fit (Frango + Ovo)', price: 20.90, emoji: '??', desc: 'Frango + ovo mexido + quinoa' },
-    { id: 6, name: 'Vegetariana', price: 14.90, emoji: '??', desc: 'Gr?o de bico + br®Æcolis + batata doce' },
+    { id: 1, name: 'Frango com Br√≥colis', price: 18.90, emoji: 'üçó', desc: 'Peito de frango + br√≥colis + arroz' },
+    { id: 2, name: 'Salmon Grelhado', price: 28.90, emoji: 'üêü', desc: 'Salmon + batata doce + legumes' },
+    { id: 3, name: 'Carne Vermelha Premium', price: 24.90, emoji: 'ü•©', desc: 'Alcatra + batata inglesa + salada' },
+    { id: 4, name: 'Frango com Ab√≥bora', price: 16.90, emoji: 'üçõ', desc: 'Frango desfiado + ab√≥bora + feij√£o' },
+    { id: 5, name: 'Mix Fit (Frango + Ovo)', price: 20.90, emoji: 'ü•ö', desc: 'Frango + ovo mexido + quinoa' },
+    { id: 6, name: 'Vegetariana', price: 14.90, emoji: 'ü•ó', desc: 'Gr√£o de bico + br√≥colis + batata doce' },
   ];
 
   useEffect(() => {
@@ -96,11 +95,16 @@ export default function Store() {
     };
 
     try {
-      if (supabase) {			  
-        await supabase.from('pedidos').insert([orderData]);
-      }
+      if (supabase) {
+        const { data, error } = await supabase
+          .from('pedidos')
+          .insert([orderData])
+          .select();
 
-      await sendOrderNotification(orderData);
+        if (error) {
+          console.error('Erro Supabase:', error);
+        }
+      }
 
       setOrderConfirmed(orderData);
       localStorage.removeItem('lefit-marmitas-cart');
@@ -126,14 +130,14 @@ export default function Store() {
           marginBottom: '1rem',
           fontSize: '13px'
         }}>
-          ?? Configure vari®¢veis de ambiente para salvar pedidos no banco
+          ‚ÑπÔ∏è Configure vari√°veis de ambiente para salvar pedidos no banco
         </div>
       )}
 
       {step === 'shop' && (
         <div>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <h1 style={{ margin: '0 0 8px', fontSize: '32px' }}>?? LefitMarmitas</h1>
+            <h1 style={{ margin: '0 0 8px', fontSize: '32px' }}>ü•ó LefitMarmitas</h1>
             <p style={{ margin: 0, color: 'var(--text-secondary)', fontSize: '14px' }}>
               Marmitas fitness com ingredientes selecionados
             </p>
@@ -153,7 +157,7 @@ export default function Store() {
                 fontWeight: '600'
               }}
             >
-              ?? Carrinho ({cart.reduce((sum, item) => sum + item.qty, 0)})
+              üõí Carrinho ({cart.reduce((sum, item) => sum + item.qty, 0)})
             </button>
           </div>
 
@@ -222,14 +226,14 @@ export default function Store() {
               fontWeight: '600'
             }}
           >
-            °˚ Voltar
+            ‚Üê Voltar
           </button>
 
           <h2 style={{ margin: '0 0 1.5rem', fontSize: '24px' }}>Seu Carrinho</h2>
 
           {cart.length === 0 ? (
             <p style={{ color: 'var(--text-secondary)', textAlign: 'center', padding: '2rem' }}>
-              Seu carrinho est®¢ vazio
+              Seu carrinho est√° vazio
             </p>
           ) : (
             <>
@@ -266,7 +270,7 @@ export default function Store() {
                         fontWeight: '600'
                       }}
                     >
-                      ?
+                      ‚àí
                     </button>
                     <span style={{ minWidth: '24px', textAlign: 'center', fontWeight: '600' }}>
                       {item.qty}
@@ -299,7 +303,7 @@ export default function Store() {
                         color: 'var(--text-danger)'
                       }}
                     >
-                      ?
+                      ‚úï
                     </button>
                   </div>
                 </div>
@@ -357,7 +361,7 @@ export default function Store() {
               fontWeight: '600'
             }}
           >
-            °˚ Voltar
+            ‚Üê Voltar
           </button>
 
           <h2 style={{ margin: '0 0 1.5rem', fontSize: '24px' }}>Dados de Entrega</h2>
@@ -371,7 +375,7 @@ export default function Store() {
                 type="text"
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Jo?o Silva"
+                placeholder="Jo√£o Silva"
               />
             </div>
 
@@ -401,7 +405,7 @@ export default function Store() {
 
             <div>
               <label style={{ display: 'block', fontSize: '13px', color: 'var(--text-secondary)', marginBottom: '6px', fontWeight: '600' }}>
-                Endere?o
+                Endere√ßo
               </label>
               <input
                 type="text"
@@ -420,7 +424,7 @@ export default function Store() {
                   type="text"
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  placeholder="S?o Paulo"
+                  placeholder="S√£o Paulo"
                 />
               </div>
 
@@ -439,12 +443,12 @@ export default function Store() {
           </div>
 
           <div style={{ marginBottom: '2rem' }}>
-            <h3 style={{ margin: '0 0 12px', fontSize: '16px', fontWeight: '600' }}>M®¶todo de Pagamento</h3>
+            <h3 style={{ margin: '0 0 12px', fontSize: '16px', fontWeight: '600' }}>M√©todo de Pagamento</h3>
             <div style={{ display: 'grid', gap: '8px' }}>
               {[
-                { id: 'pix', label: '?? PIX (instantaneo)' },
-                { id: 'credit-card', label: '?? Cart?o de Cr®¶dito' },
-                { id: 'debit-card', label: '?? Cart?o de D®¶bito' },
+                { id: 'pix', label: 'üì± PIX (instant√¢neo)' },
+                { id: 'credit-card', label: 'üí≥ Cart√£o de Cr√©dito' },
+                { id: 'debit-card', label: 'üè¶ Cart√£o de D√©bito' },
               ].map(method => (
                 <label key={method.id} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', padding: '12px', borderRadius: 'var(--radius)', background: formData.paymentMethod === method.id ? 'var(--bg-accent)' : 'var(--surface-1)' }}>
                   <input
@@ -506,8 +510,8 @@ export default function Store() {
               <strong>{formData.name}</strong><br/>
               {formData.address}<br/>
               {formData.city} {formData.zipCode}<br/>
-              ?? {formData.email}<br/>
-              ?? {formData.phone}
+              üìß {formData.email}<br/>
+              üì± {formData.phone}
             </p>
           </div>
 
@@ -524,7 +528,7 @@ export default function Store() {
                 fontSize: '14px'
               }}
             >
-              °˚ Editar
+              ‚Üê Editar
             </button>
             <button
               onClick={handlePayment}
@@ -541,7 +545,7 @@ export default function Store() {
                 opacity: loading ? 0.6 : 1
               }}
             >
-              {loading ? 'Processando...' : '? Confirmar Pedido'}
+              {loading ? 'Processando...' : '‚úì Confirmar Pedido'}
             </button>
           </div>
         </div>
@@ -549,14 +553,14 @@ export default function Store() {
 
       {step === 'confirmation' && orderConfirmed && (
         <div style={{ textAlign: 'center', padding: '2rem' }}>
-          <div style={{ fontSize: '64px', marginBottom: '1rem' }}>?</div>
+          <div style={{ fontSize: '64px', marginBottom: '1rem' }}>‚úÖ</div>
           <h2 style={{ margin: '0 0 8px', fontSize: '28px', fontWeight: '600' }}>Pedido Confirmado!</h2>
           <p style={{ color: 'var(--text-secondary)', margin: '0 0 2rem', fontSize: '16px' }}>
             Obrigado por sua compra na LefitMarmitas!
           </p>
 
           <div style={{ background: 'var(--surface-1)', borderRadius: '12px', padding: '20px', marginBottom: '2rem', textAlign: 'left' }}>
-            <p style={{ margin: '0 0 12px', fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '600' }}>N®≤MERO DO PEDIDO</p>
+            <p style={{ margin: '0 0 12px', fontSize: '13px', color: 'var(--text-secondary)', fontWeight: '600' }}>N√öMERO DO PEDIDO</p>
             <p style={{ margin: '0 0 1.5rem', fontSize: '18px', fontWeight: '700', fontFamily: 'monospace', color: 'var(--fill-accent)' }}>
               {orderConfirmed.numero_pedido}
             </p>
@@ -569,9 +573,9 @@ export default function Store() {
               <div>
                 <p style={{ margin: 0, color: 'var(--text-secondary)', marginBottom: '6px', fontWeight: '600' }}>PAGAMENTO</p>
                 <p style={{ margin: 0, fontWeight: '600' }}>
-                  {orderConfirmed.metodo_pagamento === 'credit-card' && '?? Cart?o de Cr®¶dito'}
-                  {orderConfirmed.metodo_pagamento === 'debit-card' && '?? Cart?o de D®¶bito'}
-                  {orderConfirmed.metodo_pagamento === 'pix' && '?? PIX'}
+                  {orderConfirmed.metodo_pagamento === 'credit-card' && 'üí≥ Cart√£o de Cr√©dito'}
+                  {orderConfirmed.metodo_pagamento === 'debit-card' && 'üè¶ Cart√£o de D√©bito'}
+                  {orderConfirmed.metodo_pagamento === 'pix' && 'üì± PIX'}
                 </p>
               </div>
             </div>
@@ -579,10 +583,10 @@ export default function Store() {
 
           <div style={{ background: 'var(--bg-accent)', border: '1px solid var(--fill-accent)', padding: '16px', borderRadius: '12px', marginBottom: '2rem' }}>
             <p style={{ margin: 0, fontSize: '14px', color: 'var(--fill-accent)', fontWeight: '600' }}>
-              ? Confirma??o enviada para {orderConfirmed.cliente_email}
+              ‚úì Confirma√ß√£o enviada para {orderConfirmed.cliente_email}
             </p>
             <p style={{ margin: '8px 0 0', fontSize: '13px', color: 'var(--fill-accent)' }}>
-              Voc®∫ receber®¢ atualiza??es sobre sua entrega por WhatsApp
+              Voc√™ receber√° atualiza√ß√µes sobre sua entrega por WhatsApp
             </p>
           </div>
 
@@ -611,7 +615,7 @@ export default function Store() {
               fontSize: '16px'
             }}
           >
-            °˚ Voltar para Loja
+            ‚Üê Voltar para Loja
           </button>
         </div>
       )}

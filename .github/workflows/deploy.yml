@@ -21,6 +21,9 @@ jobs:
 
       - name: Build
         run: npm run build
+        env: # 👈 ADICIONE ESTE BLOCO ABAIXO DO BUILD
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}                                             
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
