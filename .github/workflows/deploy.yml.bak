@@ -21,10 +21,24 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_KEY: ${{ secrets.VITE_SUPABASE_KEY }}
 
-      - name: Deploy
+      - name: Deploy Site to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         if: github.ref == 'refs/heads/main'
         with:
           personal_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
+      # 👇 ESSA ETAPA IRÁ FORÇAR O DEPLOY DA FUNCTION DIRETO DO PIPELINE
+      - name: Deploy Supabase Edge Function
+        uses: supabase/setup-cli@v1
+        with:
+          version: 'latest'
+      
+      - name: Publicar Function no Supabase
+        run: supabase functions deploy send-order-email --project-ref ${{ secrets.SUPABASE_PROJECT_ID }}
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}

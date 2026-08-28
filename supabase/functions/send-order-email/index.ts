@@ -1,14 +1,11 @@
-// 🌐 Correção definitiva: Puxando o pacote oficial do Supabase via npm registry nativo
 import { createClient } from "npm:@supabase/supabase-js@2.45.0"
 
-// Cabeçalhos CORS padrão do Supabase para responder ao navegador do GitHub Pages
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
 Deno.serve(async (req) => {
-  // Trata a requisição de validação (Preflight) do navegador do cliente
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
@@ -17,12 +14,10 @@ Deno.serve(async (req) => {
     const { order } = await req.json()
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 
-    // Monta o relatório HTML das marmitas compradas
     const itensHtml = order.itens.map((item: any) => `
-      <p>🍲 <strong>${item.name}</strong> x${item.qty} = R$ ${(item.price * item.qty).toFixed(2)}</p>
+      <p>包装 <strong>${item.name}</strong> x${item.qty} = R$ ${(item.price * item.qty).toFixed(2)}</p>
     `).join('')
 
-    // Dispara a requisição direto para os servidores de e-mail do Resend
     const res = await fetch('https://resend.com', {
       method: 'POST',
       headers: {
