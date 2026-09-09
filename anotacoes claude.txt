@@ -1,0 +1,27 @@
+Cliente escolhe produtos → Adiciona ao carrinho (localStorage)
+              ↓
+         Checkout → Formulário endereço + email
+              ↓
+        Seleção de pagamento (teste/sandbox)
+              ↓
+    Envia dados pra API Backend
+              ↓
+    Backend processa + salva no banco + envia email
+              ↓
+    Retorna confirmação pro frontend
+	
+-----------
+
+Exemplo Mínimo (React + Supabase)
+
+Quer que eu crie um exemplo funcional? Posso fazer:
+
+P: Qual tipo de exemplo você quer?
+R: Sistema completo (carrinho + checkout + simulador de pagamento)
+
+P: Você tem experiência com?
+R: React/Vue  Supabase resende
+
+Pensou por 7s
+
+Perfeito! Vou criar um sistema completo funcional com React. Isso vai rodar direto, e depois explico como adaptar pro GitHub Pages + um backend real.	

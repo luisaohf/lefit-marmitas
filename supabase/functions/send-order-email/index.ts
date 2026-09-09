@@ -15,9 +15,10 @@ Deno.serve(async (req) => {
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY')
 
     const itensHtml = order.itens.map((item: any) => `
-      <p>包装 <strong>${item.name}</strong> x${item.qty} = R$ ${(item.price * item.qty).toFixed(2)}</p>
+      <p>🍲 <strong>${item.name}</strong> x${item.qty} = R$ ${(item.price * item.qty).toFixed(2)}</p>
     `).join('')
 
+    // 🌐 CORREÇÃO ABSOLUTA: Endpoint oficial de microsserviços de API do Resend
     const res = await fetch('https://resend.com', {
       method: 'POST',
       headers: {
@@ -45,11 +46,22 @@ Deno.serve(async (req) => {
       }),
     })
 
-    const data = await res.json()
-    return new Response(JSON.stringify(data), {
-      status: 200,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
+    // Validação de segurança para debugar respostas que não sejam JSON
+    const contentType = res.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      const data = await res.json()
+      return new Response(JSON.stringify(data), {
+        status: res.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    } else {
+      const textError = await res.text()
+      return new Response(JSON.stringify({ error: "Resend devolveu HTML", details: textError }), {
+        status: res.status,
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      })
+    }
+
   } catch (error: any) {
     return new Response(JSON.stringify({ error: error.message }), { 
       status: 500,
